@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import FeedPostShimmer from '../FeedPostShimmer';
+import FeedPostCard from '../FeedPostCard';
 
 import {
   getAllPostsInFeed,
@@ -35,11 +36,21 @@ const Feed = () => {
 
   const renderFeed = () => {
     if (loading) return renderLoading();
+
+    if (error) return <p>Something went wrong while fetching data</p>;
+
+    return posts.map((post, i) => {
+      return (
+        <li key={i}>
+          <FeedPostCard post={post} />
+        </li>
+      );
+    });
   };
 
   return (
     <div className='bg-gray-50'>
-      <ul className='w-5/12 mx-auto py-14 flex flex-col gap-14'>
+      <ul className='md:w-4/6 xl:w-5/12 mx-auto py-14 flex flex-col gap-10'>
         {renderFeed()}
       </ul>
     </div>
