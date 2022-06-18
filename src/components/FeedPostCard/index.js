@@ -47,7 +47,7 @@ const FeedPostCard = (props) => {
   };
 
   return (
-    <div className='w-full bg-white rounded-xl'>
+    <div className='w-full bg-white rounded-xl drop-shadow-md'>
       {renderHeader(post.user, post.location)}
       {renderBody()}
       {renderFooter()}
