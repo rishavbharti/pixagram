@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import FeedPostShimmer from '../FeedPostShimmer';
@@ -6,21 +6,32 @@ import FeedPostCard from '../FeedPostCard';
 
 import {
   getAllPostsInFeed,
+  getTotalPosts,
   getRandomPhotos,
 } from '../.././app/slice/feedSlice';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 const Feed = () => {
   const dispatch = useDispatch();
+  const lastElement = useRef(null);
+  const isVisible = useIntersectionObserver(lastElement, {
+    threshold: 0.5,
+    rootMargin: '200px',
+  });
 
   const {
     status: { loading, error },
   } = useSelector((state) => state.feed);
   const posts = useSelector(getAllPostsInFeed);
-  console.log(loading, posts);
+  const postsCount = useSelector(getTotalPosts);
 
   useEffect(() => {
     dispatch(getRandomPhotos());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isVisible) dispatch(getRandomPhotos());
+  }, [dispatch, isVisible]);
 
   const renderLoading = () => {
     const shimmerArray = new Array(10).fill(0);
@@ -35,9 +46,11 @@ const Feed = () => {
   };
 
   const renderFeed = () => {
-    if (loading) return renderLoading();
+    if (!postsCount) {
+      if (loading) return renderLoading();
 
-    if (error) return <p>Something went wrong while fetching data</p>;
+      if (error) return <p>Something went wrong while fetching data</p>;
+    }
 
     return posts.map((post, i) => {
       return (
@@ -48,10 +61,24 @@ const Feed = () => {
     });
   };
 
+  const renderLoadingOnScroll = () => {
+    if (postsCount && loading) {
+      return <p>Loading...</p>;
+    }
+  };
+
+  const renderPlaceholderNode = () => {
+    if (postsCount) {
+      return <li ref={lastElement} />;
+    }
+  };
+
   return (
     <div className='bg-gray-50'>
       <ul className='md:w-4/6 xl:w-5/12 mx-auto py-14 flex flex-col gap-10'>
         {renderFeed()}
+        {renderLoadingOnScroll()}
+        {renderPlaceholderNode()}
       </ul>
     </div>
   );

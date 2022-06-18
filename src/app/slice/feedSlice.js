@@ -17,7 +17,7 @@ const feedAdapter = createEntityAdapter({
 // typically used to make async requests.
 
 export const getRandomPhotos = createAsyncThunk(
-  'auth/getRandomPhotos',
+  'feed/getRandomPhotos',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
