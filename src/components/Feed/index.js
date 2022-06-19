@@ -26,11 +26,19 @@ const Feed = () => {
   const postsCount = useSelector(getTotalPosts);
 
   useEffect(() => {
-    dispatch(getRandomPhotos());
+    dispatch(getRandomPhotos({ initialLoad: postsCount === 0, count: 10 }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
-    if (isVisible) dispatch(getRandomPhotos());
+    if (isVisible) {
+      dispatch(
+        getRandomPhotos({
+          initialLoad: false,
+          count: 10,
+        })
+      );
+    }
   }, [dispatch, isVisible]);
 
   const renderLoading = () => {

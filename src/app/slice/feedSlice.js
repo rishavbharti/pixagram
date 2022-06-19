@@ -18,14 +18,52 @@ const feedAdapter = createEntityAdapter({
 
 export const getRandomPhotos = createAsyncThunk(
   'feed/getRandomPhotos',
-  async (_, { rejectWithValue }) => {
+  async ({ initialLoad, count }, { rejectWithValue }) => {
     try {
+      // Check if 'cache' is supported
+      if ('caches' in window) {
+        const cacheStorage = await caches.open('growwgram_feed');
+        const cachedResponse = await cacheStorage.match('/photos/random');
+
+        // If loaded for the first time or if no cache exists
+        if (!initialLoad || !cachedResponse || !cachedResponse.ok) {
+          const response = await axios.get(
+            `${BASE_URL}/photos/random?count=${count}`,
+            config
+          );
+
+          let data;
+
+          // If cachedResponse exists, combine it with the new response
+          if (cachedResponse) {
+            const cachedJSONResponse = await cachedResponse.json();
+
+            data = new Response(
+              JSON.stringify([...response.data, ...cachedJSONResponse])
+            );
+          } else {
+            data = new Response(JSON.stringify(response.data));
+          }
+
+          // Putting fetched data into cache
+          cacheStorage.put('/photos/random', data);
+
+          return response.data;
+        }
+
+        // If initialLoad, return the cached response
+        return cachedResponse.json();
+      }
+
+      
       const response = await axios.get(
-        `${BASE_URL}/photos/random?count=10`,
+        `${BASE_URL}/photos/random?count=${count}`,
         config
       );
+
       return response.data;
     } catch (error) {
+      console.error(error);
       if (!error.response) {
         throw error;
       }
