@@ -134,8 +134,8 @@ const UserProfile = () => {
     return (
       <>
         {renderProfileHeader(profile)}
-        <div>
-          <div className='flex justify-end mx-20'>
+        <>
+          <div className='flex justify-end m-5 md:mx-20'>
             <button onClick={() => setShowAsList(!showAsList)}>
               <img
                 src={showAsList ? GridIcon : ListIcon}
@@ -146,7 +146,7 @@ const UserProfile = () => {
           </div>
 
           {renderPhotos(photos)}
-        </div>
+        </>
       </>
     );
   };
