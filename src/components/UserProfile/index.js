@@ -1,15 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import ImageCard from '../ImageCard';
+import FeedPostCard from '../FeedPostCard';
 
 import { getUserProfile } from '../../app/slice/userProfileSlice';
+
+import GridIcon from '../../assets/icons/grid_icon.svg';
+import ListIcon from '../../assets/icons/list_icon.svg';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
   let { username } = useParams();
   const _username = username.split('@')[1];
+  const [showAsList, setShowAsList] = useState(false);
 
   const state = useSelector((state) => state.userProfile);
 
@@ -38,7 +43,7 @@ const UserProfile = () => {
     );
   };
 
-  const renderPhotos = (photos) => {
+  const renderGridView = (photos) => {
     const maxPhotosIndexFirstColumn = Math.ceil(photos.length / 3);
     const maxPhotosIndexSecondColumn = maxPhotosIndexFirstColumn * 2;
     const maxPhotosIndexThirdColumn = maxPhotosIndexFirstColumn * 3;
@@ -84,6 +89,26 @@ const UserProfile = () => {
     );
   };
 
+  const renderListView = (photos) => {
+    return (
+      <ul className='md:w-4/6 xl:w-5/12 mx-auto py-14 flex flex-col gap-10'>
+        {photos.map((photo, i) => {
+          return (
+            <li key={i}>
+              <FeedPostCard post={photo} showHeader={false} />
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+  const renderPhotos = (photos) => {
+    if (showAsList) return renderListView(photos);
+
+    return renderGridView(photos);
+  };
+
   const renderContent = () => {
     if (
       !state?.[_username] ||
@@ -109,7 +134,19 @@ const UserProfile = () => {
     return (
       <>
         {renderProfileHeader(profile)}
-        {renderPhotos(photos)}
+        <div>
+          <div className='flex justify-end mx-20'>
+            <button onClick={() => setShowAsList(!showAsList)}>
+              <img
+                src={showAsList ? GridIcon : ListIcon}
+                alt={`Show as ${showAsList ? 'Grid' : 'List'}`}
+                className='w-10 h-10 p-2 border rounded-md'
+              />
+            </button>
+          </div>
+
+          {renderPhotos(photos)}
+        </div>
       </>
     );
   };

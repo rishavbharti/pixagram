@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const FeedPostCard = (props) => {
-  const { post } = props;
+  const { post, showHeader = true } = props;
 
   const renderHeader = (user, location) => {
     return (
@@ -40,20 +40,31 @@ const FeedPostCard = (props) => {
 
   const renderFooter = () => {
     return (
-      <div className='h-14 px-8 py-4 flex justify-between gap-4'>
-        <p className='text-sm text-neutral-500'>
-          {post.likes.toLocaleString()} likes
-        </p>
-        <p className='text-sm text-neutral-500'>
-          {post.views.toLocaleString()} views
-        </p>
+      <div className='px-8 py-4 flex flex-col gap-4'>
+        {post.description && (
+          <p className='text-sm text-neutral-600'>{post.description}</p>
+        )}
+        <div className='flex justify-between gap-4'>
+          {post.likes ? (
+            <p className='text-sm text-neutral-500'>
+              {post.likes.toLocaleString()} {`like${post.likes > 1 ? 's' : ''}`}
+            </p>
+          ) : (
+            ''
+          )}
+          {post.views && (
+            <p className='text-sm text-neutral-500'>
+              {post.views.toLocaleString()} {`view${post.views > 1 ? 's' : ''}`}
+            </p>
+          )}
+        </div>
       </div>
     );
   };
 
   return (
     <div className='w-full bg-white rounded-xl drop-shadow-md'>
-      {renderHeader(post.user, post.location)}
+      {showHeader && renderHeader(post.user, post.location)}
       {renderBody()}
       {renderFooter()}
     </div>
