@@ -1,23 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const FeedPostCard = (props) => {
   const { post } = props;
 
   const renderHeader = (user, location) => {
     return (
-      <div className='flex gap-5 items-center px-4 py-3 border-b border-solid'>
-        <img
-          src={user.profile_image.small}
-          alt={user.name}
-          className='rounded-full h-10 w-10'
-        />
+      <div className='px-4 py-3 border-b border-solid'>
+        <Link to={`@${user.username}`} className='flex gap-5 items-center'>
+          <img
+            src={user.profile_image.small}
+            alt={user.name}
+            className='rounded-full h-10 w-10'
+            loading='lazy'
+          />
 
-        <div className='flex-1 py-1'>
-          <p className=''>{user.name}</p>
-          {location.name && (
-            <p className='text-sm text-neutral-500'>{location.name}</p>
-          )}
-        </div>
+          <div className='flex-1 py-1'>
+            <p className=''>{user.name}</p>
+            {location.name && (
+              <p className='text-sm text-neutral-500'>{location.name}</p>
+            )}
+          </div>
+        </Link>
       </div>
     );
   };
@@ -29,6 +33,7 @@ const FeedPostCard = (props) => {
         alt={`By ${post.user.name}`}
         className='object-contain mx-auto'
         style={{ maxHeight: '34rem' }}
+        loading='lazy'
       />
     );
   };
