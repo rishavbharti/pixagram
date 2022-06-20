@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
-import Feed from './components/Feed';
-import UserProfile from './components/UserProfile';
+import Loading from './components/Loading';
+
+const Feed = lazy(() => import('./components/Feed'));
+const UserProfile = lazy(() => import('./components/UserProfile'));
 
 function App() {
   return (
     <div className='text-mainText dark:text-dm-mainText'>
       <Navbar />
-      <Routes>
-        <Route path='/:username' element={<UserProfile />} />
-        <Route path='/' element={<Feed />} />
-      </Routes>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path='/:username' element={<UserProfile />} />
+          <Route path='/' element={<Feed />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
