@@ -4,6 +4,13 @@ import {
   createEntityAdapter,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
+
+import {
+  FEED_CACHE_NAME,
+  CACHED_TIME_HEADER,
+  CACHE_DURATION,
+} from '../../constants';
+import { deleteCache } from '../../utils';
 import { BASE_URL, config } from '../../services';
 
 const feedAdapter = createEntityAdapter({
@@ -22,8 +29,20 @@ export const getRandomPhotos = createAsyncThunk(
     try {
       // Check if 'cache' is supported
       if ('caches' in window) {
-        const cacheStorage = await caches.open('growwgram_feed');
-        const cachedResponse = await cacheStorage.match('/photos/random');
+        const cacheStorage = await caches.open(FEED_CACHE_NAME);
+        let cachedResponse = await cacheStorage.match('/photos/random');
+
+        // If the page is loaded for the first time and cached response is present, call the delete cache function
+        if (initialLoad && cachedResponse) {
+          const deleted = await deleteCache(
+            cacheStorage,
+            cachedResponse,
+            CACHE_DURATION,
+            '/photos/random'
+          );
+
+          if (deleted) cachedResponse = null;
+        }
 
         // If loaded for the first time or if no cache exists
         if (!initialLoad || !cachedResponse || !cachedResponse.ok) {
@@ -32,6 +51,10 @@ export const getRandomPhotos = createAsyncThunk(
             config
           );
 
+          // Construct new headers based on the response's header to add 'cached-time'
+          const newHeaders = new Headers(response.headers);
+          newHeaders.set(CACHED_TIME_HEADER, Date.now());
+
           let data;
 
           // If cachedResponse exists, combine it with the new response
@@ -39,13 +62,18 @@ export const getRandomPhotos = createAsyncThunk(
             const cachedJSONResponse = await cachedResponse.json();
 
             data = new Response(
-              JSON.stringify([...response.data, ...cachedJSONResponse])
+              JSON.stringify([...response.data, ...cachedJSONResponse]),
+              {
+                headers: newHeaders,
+              }
             );
           } else {
-            data = new Response(JSON.stringify(response.data));
+            data = new Response(JSON.stringify(response.data), {
+              headers: newHeaders,
+            });
           }
 
-          // Putting fetched data into cache
+          // Putting fetched or combined data into cache
           cacheStorage.put('/photos/random', data);
 
           return response.data;
@@ -55,7 +83,6 @@ export const getRandomPhotos = createAsyncThunk(
         return cachedResponse.json();
       }
 
-      
       const response = await axios.get(
         `${BASE_URL}/photos/random?count=${count}`,
         config
