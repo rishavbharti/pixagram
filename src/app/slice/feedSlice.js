@@ -99,6 +99,31 @@ export const getRandomPhotos = createAsyncThunk(
   }
 );
 
+export const reactToPhoto = createAsyncThunk(
+  'feed/reactToPhoto',
+  async ({ id, reaction }, { rejectWithValue }) => {
+    try {
+      let response;
+
+      if (reaction === 'like') {
+        response = await axios.post(`${BASE_URL}/photos/${id}/like`, config);
+      }
+
+      if (reaction === 'unlike') {
+        response = await axios.delete(`${BASE_URL}/photos/${id}/like`, config);
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(...error.response.data.errors);
+    }
+  }
+);
+
 export const feedSlice = createSlice({
   name: 'feed',
   initialState: feedAdapter.getInitialState({
@@ -125,7 +150,11 @@ export const feedSlice = createSlice({
       .addCase(getRandomPhotos.rejected, (state, action) => {
         state.status.loading = false;
         state.status.error = true;
-      });
+      })
+
+      .addCase(reactToPhoto.pending, (state) => {})
+      .addCase(reactToPhoto.fulfilled, (state, action) => {})
+      .addCase(reactToPhoto.rejected, (state, action) => {});
   },
 });
 

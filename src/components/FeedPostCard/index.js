@@ -1,13 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// import { useDispatch } from 'react-redux';
+// import { reactToPhoto } from '../../app/slice/feedSlice';
+// import LikeIcon from '.././../assets/icons/like_icon.svg';
+// import UnlikeIcon from '.././../assets/icons/unlike_icon.svg';
+
 const FeedPostCard = (props) => {
   const { post, showHeader = true } = props;
+  // const dispatch = useDispatch();
 
   const renderHeader = (user, location) => {
     return (
       <div className='px-4 py-3 border-b border-solid dark:border-dm-borderColor'>
-        <Link to={`@${user.username}`} className='flex gap-5 items-center'>
+        <Link
+          to={`@${user.username}`}
+          className='flex gap-5 items-center w-fit'
+        >
           <img
             src={user.profile_image.small}
             alt={user.name}
@@ -15,7 +24,7 @@ const FeedPostCard = (props) => {
           />
 
           <div className='flex-1 py-1'>
-            <p className=''>{user.name}</p>
+            <p className='hover:text-blue-600'>{user.name}</p>
             {location.name && (
               <p className='text-sm text-labelText'>{location.name}</p>
             )}
@@ -39,14 +48,26 @@ const FeedPostCard = (props) => {
     );
   };
 
+  // const handleLikeUnlike = () => {
+  //   dispatch(
+  //     reactToPhoto({
+  //       id: post.id,
+  //       reaction: post.liked_by_user ? 'unlike' : 'like',
+  //     })
+  //   );
+  // };
+
   const renderFooter = () => {
     return (
-      <div className='px-8 py-4 flex flex-col gap-4'>
-        {post.description && (
-          <p className='text-sm text-subtitle dark:text-dm-subtitle'>
-            {post.description}
-          </p>
-        )}
+      <div className='px-8 pt-4 pb-5 flex flex-col gap-2'>
+        {/* <button onClick={handleLikeUnlike}>
+          <img
+            src={post.liked_by_user ? UnlikeIcon : LikeIcon}
+            alt={`${post.liked_by_user} ? "Unlike" : "Like"`}
+            className='w-6 h-6'
+          />
+        </button> */}
+
         <div className='flex justify-between gap-4'>
           {post.likes ? (
             <p className='text-sm text-labelText dark:text-dm-labelText'>
@@ -63,6 +84,12 @@ const FeedPostCard = (props) => {
             ''
           )}
         </div>
+
+        {post.description && (
+          <p className='text-sm text-subtitle dark:text-dm-subtitle'>
+            {post.description}
+          </p>
+        )}
       </div>
     );
   };
