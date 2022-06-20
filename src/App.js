@@ -7,7 +7,7 @@ import UserProfile from './components/UserProfile';
 
 function App() {
   return (
-    <div>
+    <div className='text-mainText dark:text-dm-mainText'>
       <Navbar />
       <Routes>
         <Route path='/:username' element={<UserProfile />} />

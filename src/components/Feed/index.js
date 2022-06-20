@@ -82,7 +82,7 @@ const Feed = () => {
   };
 
   return (
-    <div className='bg-gray-50'>
+    <div className='bg-bodyBg dark:bg-dm-bodyBg'>
       <ul className='md:w-4/6 xl:w-5/12 mx-auto py-14 flex flex-col gap-10'>
         {renderFeed()}
         {renderLoadingOnScroll()}

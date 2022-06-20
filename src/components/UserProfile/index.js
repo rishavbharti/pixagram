@@ -26,7 +26,7 @@ const UserProfile = () => {
 
   const renderProfileHeader = (profile) => {
     return (
-      <div className='md:w-4/6 xl:w-1/2 mx-auto px-4 py-5 md:py-20 border-b border-solid flex gap-5 md:gap-20'>
+      <div className='md:w-4/6 xl:w-1/2 mx-auto px-4 py-5 md:py-20 border-b border-solid dark:border-dm-borderColor flex gap-5 md:gap-20'>
         <img
           src={profile.profile_image.large}
           alt={profile.name}
@@ -37,7 +37,7 @@ const UserProfile = () => {
           <p className='uppercase font-bold text-md md:text-2xl'>
             {profile.name}
           </p>
-          <p className='text-neutral-500'>{profile.bio}</p>
+          <p className='text-labelText dark:text-dm-labelText'>{profile.bio}</p>
         </div>
       </div>
     );
@@ -118,7 +118,7 @@ const UserProfile = () => {
     )
       return (
         <div className='h-screen flex items-center'>
-          <div className='animate-spin rounded-lg bg-shimmer h-10 w-10 mx-auto'></div>
+          <div className='animate-spin rounded-lg bg-shimmer dark:bg-dm-shimmer h-10 w-10 mx-auto'></div>
         </div>
       );
 
@@ -152,7 +152,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className='bg-gray-50'>
+    <div className='bg-bodyBg dark:bg-dm-bodyBg'>
       <div>{renderContent()}</div>
     </div>
   );
