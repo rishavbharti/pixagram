@@ -52,10 +52,12 @@ const FeedPostCard = (props) => {
           ) : (
             ''
           )}
-          {post.views && (
+          {post.views ? (
             <p className='text-sm text-neutral-500'>
               {post.views.toLocaleString()} {`view${post.views > 1 ? 's' : ''}`}
             </p>
+          ) : (
+            ''
           )}
         </div>
       </div>
