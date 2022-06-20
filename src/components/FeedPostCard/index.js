@@ -12,7 +12,6 @@ const FeedPostCard = (props) => {
             src={user.profile_image.small}
             alt={user.name}
             className='rounded-full h-10 w-10'
-            loading='lazy'
           />
 
           <div className='flex-1 py-1'>
@@ -32,6 +31,8 @@ const FeedPostCard = (props) => {
         src={post.urls.regular}
         alt={`By ${post.user.name}`}
         className='object-contain mx-auto'
+        width={`${post.width}px`}
+        height={`${post.height}px`}
         style={{ maxHeight: '34rem' }}
         loading='lazy'
       />

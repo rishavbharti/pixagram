@@ -3,7 +3,13 @@ import React from 'react';
 const ImageCard = ({ photo }) => {
   return (
     <div className='relative'>
-      <img src={photo.urls.regular} alt='' loading='lazy' />
+      <img
+        src={photo.urls.regular}
+        alt=''
+        width={`${photo.width}px`}
+        height={`${photo.height}px`}
+        loading='lazy'
+      />
       {photo.description && (
         <div className='cursor-pointer absolute bottom-0 flex items-end bg-subtitle2 dark:bg-dm-subtitle2 opacity-0 hover:opacity-40 p-4 h-full w-full'>
           <p>{photo.description}</p>
