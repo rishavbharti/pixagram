@@ -12,6 +12,7 @@ It includes the following features -
 - [ ] **Infinite feed** of pictures from all over the world
 - [ ] **Profile page of photographers** showcasing their latest photos
 - [ ] **Light and Dark mode**
+- [ ] **Caching, lazy loading images and routes** (for developers)
 
 The base branch for this project is maintained in `main`.
 
