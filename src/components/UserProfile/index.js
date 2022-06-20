@@ -22,6 +22,12 @@ const UserProfile = () => {
     if (!state?.[_username]) {
       dispatch(getUserProfile({ username: _username }));
     }
+
+    // The scroll position is preserved from the previous page, hence scroll to top automatically
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, [dispatch, state, _username]);
 
   const renderProfileHeader = (profile) => {
