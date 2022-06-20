@@ -145,7 +145,7 @@ export const feedSlice = createSlice({
         state.status.loading = false;
         state.status.error = false;
 
-        feedAdapter.upsertMany(state, action.payload);
+        feedAdapter.addMany(state, action.payload);
       })
       .addCase(getRandomPhotos.rejected, (state, action) => {
         state.status.loading = false;
