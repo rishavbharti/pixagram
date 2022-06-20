@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import ImageCard from '../ImageCard';
 import FeedPostCard from '../FeedPostCard';
+import Loading from '../Loading';
 
 import { getUserProfile } from '../../app/slice/userProfileSlice';
 
@@ -122,11 +123,7 @@ const UserProfile = () => {
       !state[_username].profile ||
       !state[_username].photos.length
     )
-      return (
-        <div className='h-screen flex items-center'>
-          <div className='animate-spin rounded-lg bg-shimmer dark:bg-dm-shimmer h-10 w-10 mx-auto'></div>
-        </div>
-      );
+      return <Loading />;
 
     if (state[_username].error)
       return (
