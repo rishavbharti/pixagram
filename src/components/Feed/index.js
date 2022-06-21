@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import FeedPostShimmer from '../FeedPostShimmer';
-import FeedPostCard from '../FeedPostCard';
-import Error from '../Error';
+import FeedPostShimmer from 'components/FeedPostShimmer';
+import FeedPostCard from 'components/FeedPostCard';
+import Error from 'components/Error';
 
 import {
   getAllPostsInFeed,
   getTotalPosts,
   getRandomPhotos,
-} from '../.././app/slice/feedSlice';
-import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+} from 'app/slice/feedSlice';
+import useIntersectionObserver from 'hooks/useIntersectionObserver';
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -60,7 +60,7 @@ const Feed = () => {
 
       if (error) return <Error message={errorMessage} />;
 
-      if (!loading || !error)
+      if (!loading && !error)
         return <Error message="Sorry, we couldn't get you any photos!" />;
     }
 

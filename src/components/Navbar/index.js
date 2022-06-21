@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import ToggleTheme from '../ToggleTheme';
+import ToggleTheme from 'components/ToggleTheme';
 
 const Navbar = () => {
   return (

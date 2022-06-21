@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import ImageCard from '../ImageCard';
-import FeedPostCard from '../FeedPostCard';
-import Error from '../Error';
-import Loading from '../Loading';
+import ImageCard from 'components/ImageCard';
+import FeedPostCard from 'components/FeedPostCard';
+import Error from 'components/Error';
+import Loading from 'components/Loading';
 
-import { getUserProfile } from '../../app/slice/userProfileSlice';
+import { getUserProfile } from 'app/slice/userProfileSlice';
 
-import GridIcon from '../../assets/icons/grid_icon.svg';
-import ListIcon from '../../assets/icons/list_icon.svg';
+import GridIcon from 'assets/icons/grid_icon.svg';
+import ListIcon from 'assets/icons/list_icon.svg';
 
 const UserProfile = () => {
   const dispatch = useDispatch();

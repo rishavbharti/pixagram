@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // import { useDispatch } from 'react-redux';
-// import { reactToPhoto } from '../../app/slice/feedSlice';
-// import LikeIcon from '.././../assets/icons/like_icon.svg';
-// import UnlikeIcon from '.././../assets/icons/unlike_icon.svg';
+// import { reactToPhoto } from 'app/slice/feedSlice';
+// import LikeIcon from 'assets/icons/like_icon.svg';
+// import UnlikeIcon from 'assets/icons/unlike_icon.svg';
 
 const FeedPostCard = (props) => {
   const { post, showHeader = true } = props;

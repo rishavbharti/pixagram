@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Navbar from './components/Navbar';
-import Loading from './components/Loading';
+import Navbar from 'components/Navbar';
+import Loading from 'components/Loading';
 
-const Feed = lazy(() => import('./components/Feed'));
-const UserProfile = lazy(() => import('./components/UserProfile'));
+const Feed = lazy(() => import('components/Feed'));
+const UserProfile = lazy(() => import('components/UserProfile'));
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <Navbar />
       <Suspense fallback={<Loading />}>
         <Routes>
+          <Route exact path='/' element={<Feed />} />
           <Route path='/:username' element={<UserProfile />} />
-          <Route path='/' element={<Feed />} />
         </Routes>
       </Suspense>
     </div>
