@@ -139,9 +139,8 @@ const UserProfile = () => {
 
     if (state[_username].status.error)
       return (
-        <p className='text-center py-20'>
-          {state[_username].status?.errorMessage ||
-            'Something went wrong while fetching user profile'}
+        <p className='grid place-items-center h-screen'>
+          {state[_username].status?.errorMessage}
         </p>
       );
 

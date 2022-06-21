@@ -20,7 +20,7 @@ const Feed = () => {
   });
 
   const {
-    status: { loading, error },
+    status: { loading, error, errorMessage },
   } = useSelector((state) => state.feed);
   const posts = useSelector(getAllPostsInFeed);
   const postsCount = useSelector(getTotalPosts);
@@ -57,7 +57,17 @@ const Feed = () => {
     if (!postsCount) {
       if (loading) return renderLoading();
 
-      if (error) return <p>Something went wrong while fetching data</p>;
+      if (error)
+        return (
+          <p className='grid place-items-center h-screen'>{errorMessage}</p>
+        );
+
+      if (!loading || !error)
+        return (
+          <p className='grid place-items-center h-screen'>
+            Sorry, we couldn't get you any photos!
+          </p>
+        );
     }
 
     return posts.map((post, i) => {

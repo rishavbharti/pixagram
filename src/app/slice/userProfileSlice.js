@@ -74,7 +74,8 @@ export const userProfileSlice = createSlice({
 
         state[username].status.loading = false;
         state[username].status.error = true;
-        state[username].status.errorMessage = action.payload;
+        state[username].status.errorMessage =
+          action?.payload || 'Something went wrong while fetching user profile';
       });
   },
 });

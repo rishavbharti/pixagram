@@ -130,6 +130,7 @@ export const feedSlice = createSlice({
     status: {
       loading: false,
       error: false,
+      errorMessage: null,
     },
   }),
   // The `reducers` field lets us define reducers and generate associated actions
@@ -150,6 +151,8 @@ export const feedSlice = createSlice({
       .addCase(getRandomPhotos.rejected, (state, action) => {
         state.status.loading = false;
         state.status.error = true;
+        state.status.errorMessage =
+          action?.payload || 'Something went wrong while fetching data';
       })
 
       .addCase(reactToPhoto.pending, (state) => {})
