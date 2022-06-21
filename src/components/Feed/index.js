@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import FeedPostShimmer from '../FeedPostShimmer';
 import FeedPostCard from '../FeedPostCard';
+import Error from '../Error';
 
 import {
   getAllPostsInFeed,
@@ -57,17 +58,10 @@ const Feed = () => {
     if (!postsCount) {
       if (loading) return renderLoading();
 
-      if (error)
-        return (
-          <p className='grid place-items-center h-screen'>{errorMessage}</p>
-        );
+      if (error) return <Error message={errorMessage} />;
 
       if (!loading || !error)
-        return (
-          <p className='grid place-items-center h-screen'>
-            Sorry, we couldn't get you any photos!
-          </p>
-        );
+        return <Error message="Sorry, we couldn't get you any photos!" />;
     }
 
     return posts.map((post, i) => {

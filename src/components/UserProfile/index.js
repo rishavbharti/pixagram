@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import ImageCard from '../ImageCard';
 import FeedPostCard from '../FeedPostCard';
+import Error from '../Error';
 import Loading from '../Loading';
 
 import { getUserProfile } from '../../app/slice/userProfileSlice';
@@ -142,11 +143,7 @@ const UserProfile = () => {
     }
 
     if (state[_username].status.error)
-      return (
-        <p className='grid place-items-center h-screen'>
-          {state[_username].status?.errorMessage}
-        </p>
-      );
+      return <Error message={state[_username].status?.errorMessage} />;
 
     const { profile, photos } = state[_username];
 
