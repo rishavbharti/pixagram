@@ -59,6 +59,10 @@ const UserProfile = () => {
   };
 
   const renderGridView = (photos) => {
+    /** Since a grid of three columns is being shown.
+     *  The below calculations gives us the maximum index of photos to be shown in each column.
+     *  Thus an approximately equal number of photos are shown in each column.
+     **/
     const maxPhotosIndexFirstColumn = Math.ceil(photos.length / 3);
     const maxPhotosIndexSecondColumn = maxPhotosIndexFirstColumn * 2;
     const maxPhotosIndexThirdColumn = maxPhotosIndexFirstColumn * 3;
