@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ImageCard = ({ photo }) => {
   return (
@@ -17,6 +18,15 @@ const ImageCard = ({ photo }) => {
       )}
     </div>
   );
+};
+
+ImageCard.propTypes = {
+  photo: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    urls: PropTypes.shape({ regular: PropTypes.string }).isRequired,
+    description: PropTypes.string,
+  }),
 };
 
 export default ImageCard;

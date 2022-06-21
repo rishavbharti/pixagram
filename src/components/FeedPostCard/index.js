@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // import { useDispatch } from 'react-redux';
 // import { reactToPhoto } from '../../app/slice/feedSlice';
@@ -101,6 +102,24 @@ const FeedPostCard = (props) => {
       {renderFooter()}
     </div>
   );
+};
+
+FeedPostCard.propTypes = {
+  post: PropTypes.shape({
+    user: PropTypes.shape({
+      username: PropTypes.string,
+      name: PropTypes.string,
+      profile_image: PropTypes.shape({ small: PropTypes.string }),
+    }).isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    urls: PropTypes.shape({ regular: PropTypes.string }).isRequired,
+    location: PropTypes.shape({ name: PropTypes.string }),
+    likes: PropTypes.number,
+    views: PropTypes.number,
+    description: PropTypes.string,
+  }),
+  showHeader: PropTypes.bool,
 };
 
 export default FeedPostCard;
