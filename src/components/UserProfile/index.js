@@ -32,6 +32,14 @@ const UserProfile = () => {
   }, [dispatch, state, _username]);
 
   const renderProfileHeader = (profile) => {
+    if (!profile) {
+      return (
+        <p className='text-center py-20'>
+          Seems like the user forgot to write a bio!
+        </p>
+      );
+    }
+
     return (
       <div className='md:w-4/6 xl:w-1/2 mx-auto px-4 py-5 md:py-20 border-b border-solid dark:border-dm-borderColor flex gap-5 md:gap-20'>
         <img
@@ -111,24 +119,29 @@ const UserProfile = () => {
   };
 
   const renderPhotos = (photos) => {
+    if (!photos.length) {
+      return (
+        <p className='text-center py-20'>
+          Still clicking photos. Come back later.
+        </p>
+      );
+    }
+
     if (showAsList) return renderListView(photos);
 
     return renderGridView(photos);
   };
 
   const renderContent = () => {
-    if (
-      !state?.[_username] ||
-      state[_username].loading ||
-      !state[_username].profile ||
-      !state[_username].photos.length
-    )
+    if (!state?.[_username] || state[_username].status.loading) {
       return <Loading />;
+    }
 
-    if (state[_username].error)
+    if (state[_username].status.error)
       return (
         <p className='text-center py-20'>
-          Something went wrong while fetching user profile
+          {state[_username].status?.errorMessage ||
+            'Something went wrong while fetching user profile'}
         </p>
       );
 

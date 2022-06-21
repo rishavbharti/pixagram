@@ -33,6 +33,7 @@ export const userProfileSlice = createSlice({
       status: {
         loading: false,
         error: false,
+        errorMessage: null
       },
     },
     */
@@ -52,6 +53,7 @@ export const userProfileSlice = createSlice({
           status: {
             loading: true,
             error: false,
+            errorMessage: null,
           },
         };
       })
@@ -72,6 +74,7 @@ export const userProfileSlice = createSlice({
 
         state[username].status.loading = false;
         state[username].status.error = true;
+        state[username].status.errorMessage = action.payload;
       });
   },
 });
