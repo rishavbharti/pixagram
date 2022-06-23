@@ -9,7 +9,7 @@ const UserProfile = lazy(() => import('pages/UserProfile'));
 
 function App() {
   return (
-    <div className='text-mainText dark:text-dm-mainText'>
+    <div className='text-mainText dark:text-dm-mainText bg-bodyBg dark:bg-dm-bodyBg'>
       <Navbar />
       <div className='pt-14'>
         <Suspense fallback={<Loading />}>

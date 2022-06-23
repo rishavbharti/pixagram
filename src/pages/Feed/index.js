@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import FeedPostShimmer from 'components/FeedPostShimmer';
-import FeedPostCard from 'components/FeedPostCard';
-import Error from 'components/Error';
+import ListView from 'components/ListView';
 
 import {
   getAllPostsInFeed,
@@ -40,60 +38,19 @@ const Feed = () => {
         })
       );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isVisible]);
 
-  const renderLoading = () => {
-    const shimmerArray = new Array(10).fill(0);
-
-    return shimmerArray.map((el, i) => {
-      return (
-        <li key={i}>
-          <FeedPostShimmer />
-        </li>
-      );
-    });
-  };
-
-  const renderFeed = () => {
-    if (!postsCount) {
-      if (loading) return renderLoading();
-
-      if (error) return <Error message={errorMessage} />;
-
-      if (!loading && !error)
-        return <Error message="Sorry, we couldn't get you any photos!" />;
-    }
-
-    return posts.map((post, i) => {
-      return (
-        <li key={i}>
-          <FeedPostCard post={post} />
-        </li>
-      );
-    });
-  };
-
-  const renderLoadingOnScroll = () => {
-    if (postsCount && loading) {
-      return <p>Loading...</p>;
-    }
-  };
-
-  const renderPlaceholderNode = () => {
-    if (postsCount) {
-      return <li ref={lastElement} />;
-    }
-  };
-
   return (
-    <div className='bg-bodyBg dark:bg-dm-bodyBg'>
-      <ul className='md:w-4/6 xl:w-5/12 mx-auto py-14 flex flex-col gap-10'>
-        {renderFeed()}
-        {renderLoadingOnScroll()}
-        {renderPlaceholderNode()}
-      </ul>
-    </div>
+    <ListView
+      posts={posts}
+      allowInfiniteScroll
+      postsCount={postsCount}
+      loading={loading}
+      error={error}
+      errorMessage={errorMessage}
+      placeholderNodeRef={lastElement}
+    />
   );
 };
 
