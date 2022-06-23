@@ -4,8 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from 'components/Navbar';
 import Loading from 'components/Loading';
 
-const Feed = lazy(() => import('components/Feed'));
-const UserProfile = lazy(() => import('components/UserProfile'));
+const Feed = lazy(() => import('pages/Feed'));
+const UserProfile = lazy(() => import('pages/UserProfile'));
 
 function App() {
   return (

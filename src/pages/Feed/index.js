@@ -32,7 +32,7 @@ const Feed = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && !loading) {
       dispatch(
         getRandomPhotos({
           initialLoad: false,
@@ -40,6 +40,7 @@ const Feed = () => {
         })
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isVisible]);
 
   const renderLoading = () => {
