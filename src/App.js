@@ -11,12 +11,14 @@ function App() {
   return (
     <div className='text-mainText dark:text-dm-mainText'>
       <Navbar />
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route exact path='/' element={<Feed />} />
-          <Route path='/:username' element={<UserProfile />} />
-        </Routes>
-      </Suspense>
+      <div className='pt-14'>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route exact path='/' element={<Feed />} />
+            <Route path='/:username' element={<UserProfile />} />
+          </Routes>
+        </Suspense>
+      </div>
     </div>
   );
 }
