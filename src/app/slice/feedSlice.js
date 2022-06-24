@@ -5,7 +5,11 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { FEED_CACHE_NAME, CACHED_TIME_HEADER, CACHE_DURATION } from 'constants';
+import {
+  FEED_CACHE_NAME,
+  CACHED_TIME_HEADER,
+  CACHE_DURATION,
+} from '../../constants';
 import { deleteCache } from 'utils';
 import { BASE_URL, config } from 'services';
 

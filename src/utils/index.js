@@ -17,9 +17,7 @@ export const deleteCache = async function (
   url
 ) {
   try {
-    const cachedTime = Math.floor(
-      cachedResponse.headers.get(CACHED_TIME_HEADER)
-    );
+    const cachedTime = cachedResponse.headers.get(CACHED_TIME_HEADER);
 
     const timeElapsed = (Date.now() - cachedTime) / 1000;
 
