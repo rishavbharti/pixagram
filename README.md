@@ -1,8 +1,8 @@
-## GrowwGram
+## Pixagram
 
 _Instagram for aesthetic pictures_
 
-## Frontend project for GrowwGram
+## Frontend project for Pixagram
 
 This project is built using React as the core library and various other libraries like Redux Toolkit, React Router and Tailwind CSS.
 It consumes Unsplash API to show photos.
